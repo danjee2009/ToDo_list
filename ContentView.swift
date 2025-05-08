@@ -10,7 +10,6 @@ struct ContentView: View {
     
     @State private var text : String = ""
     @State public var plan : [planitem] = []
-    @State private var showsheet : Bool = false
     @State private var ischecked : Bool = false
     @State private var showalert : Bool = false
     
@@ -54,7 +53,7 @@ struct ContentView: View {
                 HStack{
                     Spacer()
                     Button(action:{
-                        showsheet.toggle()
+                        showalert.toggle()
                     }){
                         Image(systemName: "plus")
                             .frame(width: 40,height: 40)
@@ -62,9 +61,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .background(Color.black)
                             .clipShape(Circle())
-                    }.sheet(isPresented:$showsheet){
-                        Inputsheet()
-                            .presentationDetents([.height(120), .medium])
+                    }.sheet(isPresented:$showalert){
                     }.padding()
                 }
                 .alert("확인", isPresented: $showalert){
@@ -96,40 +93,7 @@ struct ContentView: View {
     }
     
 }
-
-
-
-struct Inputsheet : View {
     
-    @State var text : String = ""
-    @State var li : [String] = []
-    
-    var body: some View {
-        TextField("입력",text: $text)
-            .background(Color(uiColor: .secondarySystemBackground))
-            .padding()
-        Button(action : add){
-            Text("추가")
-        }
-        
-        List{
-            ForEach(li,id:\.self){el in
-                Text(el)
-            }
-        }
-        }
-    
-    func add(){
-        if !text.isEmpty{
-            li.append(text)
-            text=""
-        }
-    }
-        
-    }
-    
-
-
 #Preview {
     ContentView()
 }
